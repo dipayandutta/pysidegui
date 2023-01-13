@@ -1,15 +1,20 @@
-from PySide6.QtWidgets import QWidget,QLineEdit,QLabel,QPushButton,QGridLayout
+from PySide6.QtWidgets import QWidget,QLineEdit,QLabel,QPushButton,QGridLayout,QVBoxLayout,QMainWindow
 from childWindow import ChildWindow
 
 class Widget(QWidget):
     def __init__(self):
         super().__init__()
+        
+        self.setWindowTitle("Login Window")
+        self.setFixedSize(640,480)
+        self.cWindow = ChildWindow()
 
         username = QLabel("Username:")
         self.user_edit = QLineEdit()
         
         password = QLabel("Password:")
         self.pass_edit = QLineEdit()
+        self.pass_edit.setEchoMode(QLineEdit.Password)
 
         button = QPushButton("login")
         button.clicked.connect(self.login_user)
@@ -30,8 +35,7 @@ class Widget(QWidget):
         userCred = self.user_edit.text()
         passCred = self.pass_edit.text()
 
-        print(userCred)
-        print(passCred)
-
-        cWindow = ChildWindow()
-        cWindow.show()
+        if userCred=='admin' and passCred=='admin':
+            self.cWindow.show()
+        else:
+            self.text_holder_label.setText("Wrong username or password") 
